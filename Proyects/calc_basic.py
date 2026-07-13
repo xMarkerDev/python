@@ -24,45 +24,85 @@
 
 #Agregamos ahora menos interactivos
 
-while True:
+#Funciones
+
+def menu ():
   print("Calculadora con opciones")
   print("1. Suma")
   print("2. Resta")
   print("3. Multiplicacion")
   print("4. Division")
-  print("5. Exit")
+  print("5. Historial")
+  print("6. Exit")
+
+def sumar (a, b):
+  return a + b
+
+def restar (a, b):
+  return a - b
+
+def mutiplicar (a, b):
+  return a * b
+
+def dividir (a, b):
+  if num2 == 0:
+    return print("Resultado: Division por 0 NO definida")
+  else:
+    return a / b
+
+def definir_numeros ():
+  while True:
+    try:
+      n1 = float(input("Ingresa el primer numero: "))
+      n2 = float(input("Ingresa el segundo numero: "))
+      return n1, n2
+    except ValueError:
+      print("Error: Ingresa numeros validos")
+
+historial = []
+
+while True:
+  menu()
+  option = input('Elige una opcion del 1-6: ')
   
-  option = input('Elige una opcion del 1-5: ')
-  
-  if option == "5":
+  if option == "6":
     print("Gracias por usar la calculadora")
     break
   
-  if option in ["1", "2", "3", "4"]:
+  elif option == "5":
+    if historial:
+      print("HISTORIAL")
+      for i, operacion in enumerate(historial, 1):
+        print(f"{i}. {operacion}")
+    else:
+      print("No hay operaciones en el historial")
+  
+  
+  elif option in ["1", "2", "3", "4"]:
     
-    num1 = float(input("Ingresa el primer numero: "))
-    num2 = float(input("Ingresa el segundo numero: "))
+    num1, num2 = definir_numeros()
     
     if option == "1":
-      resultado = num1 + num2
-      print(f"Resultado: {num1} + {num2} = {resultado}")
+      resultado = sumar(num1,num2)
+      operacion = f"{num1} + {num2} = {resultado}"
       
-    if option == "2":
-      resultado = num1 - num2
-      print(f"Resultado: {num1} - {num2} = {resultado}")
+    elif option == "2":
+      resultado = restar(num1,num2)
+      operacion = f"{num1} - {num2} = {resultado}"
       
-    if option == "3":
-      resultado = num1 * num2
-      print(f"Resultado: {num1} x {num2} = {resultado}")
-      
-    if option == "4":
-      
-      if num2 != 0:
-        resultado = num1 / num2
-        print(f"Resultado: {num1} / {num2} = {resultado}")
-        
+    elif option == "3":
+      resultado = mutiplicar(num1,num2)
+      operacion = f"{num1} * {num2} = {resultado}"
+    
+    elif option == "4":
+      resultado = dividir(num1,num2)
+      if num2 == 0:
+        operacion = "Operacion no definida"
       else:
-        print("Resultado: Divisio por cero no definida")
+        operacion = f"{num1} / {num2} = {resultado}"
         
+    print(f"{operacion}")
+    historial.append(operacion)
+    
   else:
     print("Opcion no valida")
